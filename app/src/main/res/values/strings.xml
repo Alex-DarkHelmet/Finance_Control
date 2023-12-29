@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Safe money</string>
+    <string name="home_nav_bar">Home</string>
+    <string name="calendar_nav_bar">Calendar</string>
+    <string name="budget_nav_bar">Budget</string>
+    <string name="statistic_nav_bar">Statistic</string>
+    <string name="total_balance_title">Total balance</string>
+    <string name="expense_title">Expense</string>
+    <string name="category_divider"><![CDATA[->]]></string>
+    <string name="menu_title">Menu</string>
+    <string name="repeat_transaction_title">Repeat transactions</string>
+    <string name="home_title">Home</string>
+    <string name="previous_month">Previous</string>
+    <string name="income_title">Income</string>
+</resources>
