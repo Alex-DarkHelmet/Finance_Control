@@ -1,6 +1,6 @@
 package com.alex_bystrov.safemoney.data.repository
 
-import com.alex_bystrov.safemoney.domain.features.balance.models.TotalBalanceModel
+import com.alex_bystrov.safemoney.domain.features.balance.total.TotalBalanceModel
 import kotlinx.coroutines.flow.Flow
 
 interface TotalBalanceDataRepository {

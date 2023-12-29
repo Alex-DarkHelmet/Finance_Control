@@ -1,7 +1,6 @@
-package com.alex_bystrov.safemoney.domain.features.calculate.model
+package com.alex_bystrov.safemoney.domain.features.calculate.userInput
 
 import com.alex_bystrov.safemoney.common.Converter
-import com.alex_bystrov.safemoney.domain.features.calculate.repository.CalculateInputRepository
 
 enum class TypeOfCalculations {
     Sum, Minus, Divide, Multiply

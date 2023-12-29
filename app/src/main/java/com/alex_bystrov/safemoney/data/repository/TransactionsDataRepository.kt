@@ -4,7 +4,6 @@ import com.alex_bystrov.safemoney.domain.features.transactions.models.UserTransa
 import kotlinx.coroutines.flow.Flow
 
 interface TransactionsDataRepository {
-
     suspend fun getMonthlyTransactions(dateStart: String, dateEnd: String): Flow<List<UserTransactionModel>>
 
     suspend fun getDailyTransactions(date: String): Flow<List<UserTransactionModel>>
