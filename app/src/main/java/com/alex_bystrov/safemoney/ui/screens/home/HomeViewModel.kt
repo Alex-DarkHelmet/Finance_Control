@@ -3,7 +3,7 @@ package com.alex_bystrov.safemoney.ui.screens.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alex_bystrov.safemoney.common.ObtainEvent
-import com.alex_bystrov.safemoney.domain.features.balance.repository.BalanceRepository
+import com.alex_bystrov.safemoney.domain.features.balance.period.PeriodBalanceRepository
 import com.alex_bystrov.safemoney.domain.features.transactions.repository.UserTransactionsRepository
 import com.alex_bystrov.safemoney.ui.screens.home.model.HomeScreenEvent
 import com.alex_bystrov.safemoney.ui.screens.home.model.HomeScreenViewState
@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 import java.time.LocalDate
 
 class HomeViewModel(
-    private val balanceRepository: BalanceRepository,
+    private val balanceRepository: PeriodBalanceRepository,
     private val transactionRepository: UserTransactionsRepository
 ) : ViewModel(), ObtainEvent<HomeScreenEvent> {
 

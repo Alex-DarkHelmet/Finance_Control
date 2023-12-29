@@ -2,11 +2,11 @@ package com.alex_bystrov.safemoney.domain.features.calendar
 
 import com.alex_bystrov.safemoney.common.Converter
 import java.time.LocalDate
+import java.util.Calendar
 
 class Calendar(
     private val converter: Converter
 ) : CalendarRepository {
-
     override fun getStartWeekdayOfMonth(currentDate: String): String {
         val date = LocalDate.parse(currentDate)
         val startDayOfMonth = date.minusDays(date.dayOfMonth.toLong() - 1)
@@ -50,6 +50,12 @@ class Calendar(
         }
     }
 
+    override fun isFirstDayOfMonth(date: String): Boolean {
+        val currentDate = LocalDate.parse(date).dayOfMonth
+
+        return currentDate == FIRST_DAY_IN_MONTH
+    }
+
     private fun isLastMonth(month: Int): Boolean = month == LAST_MONTH_NUMBER
 
     private fun isFirstMonth(month: Int): Boolean = month == FIRST_MONTH_NUMBER
@@ -57,5 +63,6 @@ class Calendar(
     companion object {
         private const val FIRST_MONTH_NUMBER = 1
         private const val LAST_MONTH_NUMBER = 12
+        private const val FIRST_DAY_IN_MONTH = 1
     }
 }

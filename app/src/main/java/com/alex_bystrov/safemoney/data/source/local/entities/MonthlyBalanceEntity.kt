@@ -3,7 +3,7 @@ package com.alex_bystrov.safemoney.data.source.local.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.alex_bystrov.safemoney.domain.features.balance.models.BalanceModel
+import com.alex_bystrov.safemoney.domain.features.balance.period.MonthlyBalanceModel
 
 @Entity(
     tableName = "balance",
@@ -20,12 +20,16 @@ data class BalanceEntity(
 
     @ColumnInfo(name = "expense_sum")
     val expenseSum: Double,
+
+    @ColumnInfo(name = "current_balance")
+    val currentBalance: Double
 )
 
-fun BalanceEntity.mapToDomainModel(): BalanceModel =
-    BalanceModel(
+fun BalanceEntity.mapToDomainModel(): MonthlyBalanceModel =
+    MonthlyBalanceModel(
         balanceId = balanceId,
         yearMonth = yearMonth,
         incomeSum = incomeSum,
         expenseSum = expenseSum,
+        currentBalance = currentBalance
     )

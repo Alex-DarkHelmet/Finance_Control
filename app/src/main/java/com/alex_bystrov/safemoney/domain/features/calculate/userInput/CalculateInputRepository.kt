@@ -1,4 +1,4 @@
-package com.alex_bystrov.safemoney.domain.features.calculate.repository
+package com.alex_bystrov.safemoney.domain.features.calculate.userInput
 
 interface CalculateInputRepository {
     fun getCalculatedInput(userInput: String): String

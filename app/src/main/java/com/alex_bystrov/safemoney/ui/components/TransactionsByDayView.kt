@@ -25,6 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.alex_bystrov.safemoney.R
+import com.alex_bystrov.safemoney.domain.common.CategoryModel
 import com.alex_bystrov.safemoney.domain.features.transactions.models.DailyTransactionsModel
 import com.alex_bystrov.safemoney.domain.features.transactions.models.UserTransactionModel
 import com.alex_bystrov.safemoney.ui.theme.SafeMoneyAppTheme
@@ -137,7 +138,7 @@ fun TransactionsByDayView(
 @Composable
 fun TransactionByCategory(
     modifier: Modifier = Modifier,
-    model: UserTransactionModel,
+    model: CategoryModel,
     backgroundColor: Color,
     icon: Painter,
     descriptionIcon: String,
@@ -162,7 +163,7 @@ fun TransactionByCategory(
         Text(
             modifier = modifier
                 .padding(start = 5.dp, end = 5.dp),
-            text = model.category.first,
+            text = model.category,
             fontSize = 16.sp,
             fontWeight = FontWeight(400),
             color = Color.White
@@ -181,7 +182,7 @@ fun TransactionByCategory(
             modifier = modifier
                 .padding(start = 5.dp)
                 .weight(1f),
-            text = model.category.second,
+            text = model.subCategory.first(),
             fontSize = 16.sp,
             fontWeight = FontWeight(400),
             color = Color.White

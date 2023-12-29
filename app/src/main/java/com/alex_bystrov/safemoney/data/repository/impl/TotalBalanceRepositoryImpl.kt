@@ -3,7 +3,7 @@ package com.alex_bystrov.safemoney.data.repository.impl
 import com.alex_bystrov.safemoney.data.repository.TotalBalanceDataRepository
 import com.alex_bystrov.safemoney.data.source.local.dao.TotalBalanceDao
 import com.alex_bystrov.safemoney.data.source.local.entities.mapToDomainTotalBalance
-import com.alex_bystrov.safemoney.domain.features.balance.models.TotalBalanceModel
+import com.alex_bystrov.safemoney.domain.features.balance.total.TotalBalanceModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.transform
 

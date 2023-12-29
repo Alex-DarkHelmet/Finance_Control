@@ -1,7 +1,7 @@
 package com.alex_bystrov.safemoney.domain.features.transactions
 
 import com.alex_bystrov.safemoney.data.repository.TransactionsDataRepository
-import com.alex_bystrov.safemoney.domain.features.balance.repository.BalanceRepository
+import com.alex_bystrov.safemoney.domain.features.balance.period.PeriodBalanceRepository
 import com.alex_bystrov.safemoney.common.Converter
 import com.alex_bystrov.safemoney.domain.features.transactions.models.UserTransactionModel
 import com.alex_bystrov.safemoney.domain.features.transactions.repository.UserTransactionsRepository
@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 
 class UserTransactions(
     private val transactionsRepository: TransactionsDataRepository,
-    private val balanceRepository: BalanceRepository,
+    private val balanceRepository: PeriodBalanceRepository,
     private val converter: Converter
 //    private val calendar: CalendarRepository,
 //    private val calculateBalance: CalculateBalanceRepository
