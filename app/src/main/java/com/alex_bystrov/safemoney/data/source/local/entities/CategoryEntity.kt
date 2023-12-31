@@ -7,10 +7,7 @@ import com.alex_bystrov.safemoney.domain.common.CategoryModel
 import com.alex_bystrov.safemoney.domain.features.transactions.models.TypeTransactionModel
 
 @Entity(
-    tableName = "Category_entity",
-    foreignKeys = [
-
-    ]
+    tableName = "category_entity",
 )
 data class CategoryEntity(
     @PrimaryKey(autoGenerate = true)
@@ -25,16 +22,6 @@ data class CategoryEntity(
 
     @ColumnInfo(name = "category")
     val category: String,
-
-    @ColumnInfo(name = "sub_categories")
-    val subCategoryId: Long
-)
-
-@Entity(tableName = "SubCategory_entity")
-data class SubCategory(
-    @PrimaryKey
-    val id: Long,
-    val name: String
 )
 
 fun CategoryEntity.mapToCategoryModel(): CategoryModel =
@@ -43,5 +30,4 @@ fun CategoryEntity.mapToCategoryModel(): CategoryModel =
         icon = icon,
         type = TypeTransactionModel.valueOf(type),
         category = category,
-        subCategory = emptyList()
     )

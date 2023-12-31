@@ -1,6 +1,6 @@
 package com.alex_bystrov.safemoney.ui.screens.home.model
 
-import com.alex_bystrov.safemoney.domain.features.transactions.models.DailyTransactionsModel
+import com.alex_bystrov.safemoney.domain.common.DailyTotalModel
 
 sealed class HomeScreenViewState {
     object Error: HomeScreenViewState()
@@ -11,6 +11,6 @@ sealed class HomeScreenViewState {
         val incomeByMonth: Double = 0.0,
         val remainsByMonth: Double = 0.0,
         val totalBalance: Double = 0.0,
-        val dailyTransactions: List<DailyTransactionsModel> = emptyList()
+        val dailyTransactions: List<DailyTotalModel> = emptyList()
     ): HomeScreenViewState()
 }

@@ -25,8 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.alex_bystrov.safemoney.R
-import com.alex_bystrov.safemoney.domain.common.CategoryModel
-import com.alex_bystrov.safemoney.domain.features.transactions.models.DailyTransactionsModel
+import com.alex_bystrov.safemoney.domain.common.DailyTotalModel
 import com.alex_bystrov.safemoney.domain.features.transactions.models.UserTransactionModel
 import com.alex_bystrov.safemoney.ui.theme.SafeMoneyAppTheme
 import com.alex_bystrov.safemoney.ui.theme.SafeMoneyTheme
@@ -35,7 +34,7 @@ import com.alex_bystrov.safemoney.ui.theme.SafeMoneyTheme
 fun TransactionsByDayView(
     modifier: Modifier = Modifier,
     date: String,
-    model: DailyTransactionsModel
+    model: DailyTotalModel
 ) {
     Card(
         modifier = modifier
@@ -60,11 +59,12 @@ fun TransactionsByDayView(
                 color = Color.White, // change to own typography
                 text = date
             )
+            // title of transactions
             Column(
                 modifier = modifier,
                 verticalArrangement = Arrangement.Center
             ) {
-                if (model.totalIncomeByDay != 0.0) {
+                if (model.totalDailyIncome.isNotEmpty()) {
                     Text(
                         modifier = modifier
                             .padding(end = 10.dp),
@@ -90,14 +90,14 @@ fun TransactionsByDayView(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                if (model.totalIncomeByDay != 0.0) {
+                if (model.totalDailyIncome.isNotEmpty()) {
                     Text(
                         modifier = modifier
                             .padding(end = 5.dp),
                         fontSize = 15.sp,
                         fontWeight = FontWeight(500),
                         color = Color.Green, // change to own typography
-                        text = model.totalIncomeByDay.toString()
+                        text = model.totalDailyIncome
                     )
                 }
 
@@ -107,7 +107,7 @@ fun TransactionsByDayView(
                     fontSize = 15.sp,
                     fontWeight = FontWeight(500),
                     color = Color.White, // change to own typography
-                    text = model.totalExpenseByDay.toString()
+                    text = model.totalDailyExpense
                 )
             }
         }
@@ -138,7 +138,7 @@ fun TransactionsByDayView(
 @Composable
 fun TransactionByCategory(
     modifier: Modifier = Modifier,
-    model: CategoryModel,
+    model: UserTransactionModel,
     backgroundColor: Color,
     icon: Painter,
     descriptionIcon: String,
@@ -163,7 +163,7 @@ fun TransactionByCategory(
         Text(
             modifier = modifier
                 .padding(start = 5.dp, end = 5.dp),
-            text = model.category,
+            text = model.category.toString(),
             fontSize = 16.sp,
             fontWeight = FontWeight(400),
             color = Color.White
@@ -175,16 +175,6 @@ fun TransactionByCategory(
             text = stringResource(id = R.string.category_divider),
             fontWeight = FontWeight(400),
             fontSize = 16.sp,
-            color = Color.White
-        )
-
-        Text(
-            modifier = modifier
-                .padding(start = 5.dp)
-                .weight(1f),
-            text = model.subCategory.first(),
-            fontSize = 16.sp,
-            fontWeight = FontWeight(400),
             color = Color.White
         )
 

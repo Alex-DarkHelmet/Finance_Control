@@ -163,10 +163,10 @@ fun HomeScreenDisplay(
             }
 
             item {
-                viewState.dailyTransactions.forEach { items ->
+                viewState.dailyTransactions.forEach { item ->
                     TransactionsByDayView(
-                        date = items.date,
-                        model = items
+                        date = item.date,
+                        model = item
                     )
                 }
             }
