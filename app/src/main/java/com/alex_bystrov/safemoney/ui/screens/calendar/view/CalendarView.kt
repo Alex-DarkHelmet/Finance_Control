@@ -31,8 +31,8 @@ import androidx.compose.ui.unit.sp
 import com.alex_bystrov.safemoney.R
 import com.alex_bystrov.safemoney.common.Converter
 import com.alex_bystrov.safemoney.domain.features.calendar.model.CalendarModel
-import com.alex_bystrov.safemoney.domain.features.transactions.models.DailyTransactionsModel
 import com.alex_bystrov.safemoney.domain.features.calendar.model.WeekDays
+import com.alex_bystrov.safemoney.domain.common.DailyTotalModel
 import com.alex_bystrov.safemoney.ui.theme.SafeMoneyAppTheme
 import com.alex_bystrov.safemoney.ui.theme.SafeMoneyTheme
 import java.time.LocalDate
@@ -43,7 +43,7 @@ private val converter = Converter()
 fun CalendarView(
     modifier: Modifier = Modifier,
     calendar: CalendarModel,
-    dailyTotal: List<DailyTransactionsModel> = emptyList(),
+    dailyTotal: List<DailyTotalModel> = emptyList(),
     onPreviousMonthClicked: () -> Unit,
     onNextMonthClicked: () -> Unit
 ) {
@@ -163,7 +163,7 @@ private fun WeekDaysHeader(
 private fun TransactionsCalendar(
     modifier: Modifier = Modifier,
     calendar: CalendarModel,
-    dailyTotal: List<DailyTransactionsModel> = emptyList(),
+    dailyTotal: List<DailyTotalModel> = emptyList(),
 ) {
     val days = (1..calendar.days).map { it.toString() }
 
@@ -197,8 +197,8 @@ private fun TransactionsCalendar(
 
                 TransactionItemByDay(
                     day = days[day],
-                    income = incomeByDay?.totalIncomeByDay,
-                    expense = expenseByDay?.totalExpenseByDay,
+                    income = incomeByDay?.totalDailyIncome,
+                    expense = expenseByDay?.totalDailyExpense,
                     isSelectedDay = chosenDay.intValue.toString() == days[day],
                     isCurrentDay = calendar.currentDay.toString() == days[day],
                     onDayClicked = {
@@ -214,8 +214,8 @@ private fun TransactionsCalendar(
 private fun TransactionItemByDay(
     modifier: Modifier = Modifier,
     day: String? = null,
-    income: Double? = null,
-    expense: Double? = null,
+    income: String? = null,
+    expense: String? = null,
     isCurrentDay: Boolean? = false,
     onDayClicked: () -> Unit,
     isSelectedDay: Boolean = false
@@ -253,14 +253,14 @@ private fun TransactionItemByDay(
                 modifier = modifier,
                 color = SafeMoneyAppTheme.colors.incomeText,
                 fontSize = 10.sp,
-                text = income?.toString() ?: ""
+                text = income ?: ""
             )
 
             Text(
                 modifier = modifier,
                 color = SafeMoneyAppTheme.colors.expenseText,
                 fontSize = 10.sp,
-                text = expense?.toString() ?: ""
+                text = expense ?: ""
             )
         }
     }
@@ -282,20 +282,20 @@ fun CalendarTransactionViewPreview() {
                     startWeekday = WeekDays.Fri,
                 ),
                 dailyTotal = listOf(
-                    DailyTransactionsModel(
+                    DailyTotalModel(
                         date = "2020.05.13",
-                        totalIncomeByDay = 200.0,
-                        totalExpenseByDay = 20.0
+                        totalDailyIncome = "200.0",
+                        totalDailyExpense = "20.0"
                     ),
-                    DailyTransactionsModel(
-                        date = "2020.05.14",
-                        totalIncomeByDay = 2233.0,
-                        totalExpenseByDay = 534.0
+                    DailyTotalModel(
+                        date = "2020.05.16",
+                        totalDailyIncome = "22340.0",
+                        totalDailyExpense = "34560.0"
                     ),
-                    DailyTransactionsModel(
-                        date = "2020.05.09",
-                        totalIncomeByDay = 21200.0,
-                        totalExpenseByDay = 45.0
+                    DailyTotalModel(
+                        date = "2020.05.18",
+                        totalDailyIncome = "23450.0",
+                        totalDailyExpense = "85780.0"
                     ),
                 ),
                 onNextMonthClicked = {

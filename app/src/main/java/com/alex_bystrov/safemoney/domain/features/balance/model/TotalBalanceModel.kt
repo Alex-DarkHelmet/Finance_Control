@@ -1,4 +1,4 @@
-package com.alex_bystrov.safemoney.domain.features.balance.total
+package com.alex_bystrov.safemoney.domain.features.balance.model
 
 import com.alex_bystrov.safemoney.data.source.local.entities.TotalBalanceEntity
 

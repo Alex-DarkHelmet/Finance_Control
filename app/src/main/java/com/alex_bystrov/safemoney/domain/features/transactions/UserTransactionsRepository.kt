@@ -1,6 +1,5 @@
-package com.alex_bystrov.safemoney.domain.features.transactions.repository
+package com.alex_bystrov.safemoney.domain.features.transactions
 
-import androidx.room.Transaction
 import com.alex_bystrov.safemoney.domain.features.transactions.models.UserTransactionModel
 import kotlinx.coroutines.flow.Flow
 

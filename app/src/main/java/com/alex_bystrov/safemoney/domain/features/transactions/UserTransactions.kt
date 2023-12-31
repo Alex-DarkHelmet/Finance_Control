@@ -1,15 +1,14 @@
 package com.alex_bystrov.safemoney.domain.features.transactions
 
 import com.alex_bystrov.safemoney.data.repository.TransactionsDataRepository
-import com.alex_bystrov.safemoney.domain.features.balance.period.PeriodBalanceRepository
+import com.alex_bystrov.safemoney.domain.features.balance.BalanceRepository
 import com.alex_bystrov.safemoney.common.Converter
 import com.alex_bystrov.safemoney.domain.features.transactions.models.UserTransactionModel
-import com.alex_bystrov.safemoney.domain.features.transactions.repository.UserTransactionsRepository
 import kotlinx.coroutines.flow.Flow
 
 class UserTransactions(
     private val transactionsRepository: TransactionsDataRepository,
-    private val balanceRepository: PeriodBalanceRepository,
+    private val balanceRepository: BalanceRepository,
     private val converter: Converter
 //    private val calendar: CalendarRepository,
 //    private val calculateBalance: CalculateBalanceRepository
@@ -40,7 +39,13 @@ class UserTransactions(
     }
 
     override suspend fun deleteTransaction(transactionId: Long) {
-        TODO("Not yet implemented")
+        val chosenTransaction = transactionsRepository.getChosenTransaction(transactionId)
+
+        transactionsRepository.deleteTransaction(chosenTransaction)
+    }
+
+    private suspend fun getCategoryTransactionName(transaction: UserTransactionModel): String {
+        return transactionsRepository.getCategory(transaction.category).category
     }
 
 //    private suspend fun getTransactionsByDay(date: String): Map<String, List<UserTransactionModel>> {
@@ -56,13 +61,13 @@ class UserTransactions(
 //            }
 //    }
 
-//    private fun getCalculatedDailyTransactions(date: String): Flow<DailyTransactionsModel> = flow {
+//    private fun getCalculatedDailyTransactions(date: String): Flow<DailyTotalModel> = flow {
 //        transactions.getDailyTransactions(date = date).map { transactions ->
 //            val expenseSum = calculateBalance.getDailyTotalSum(transactions = transactions, isExpense = true)
 //            val incomeSum = calculateBalance.getDailyTotalSum(transactions = transactions, isExpense = false)
 //
 //            emit(
-//                DailyTransactionsModel(
+//                DailyTotalModel(
 //                    date = date,
 //                    transactions = transactions,
 //                    totalExpenseByDay = expenseSum,

@@ -3,7 +3,7 @@ package com.alex_bystrov.safemoney.data.source.local.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.alex_bystrov.safemoney.domain.features.balance.period.MonthlyBalanceModel
+import com.alex_bystrov.safemoney.domain.features.balance.model.MonthlyBalanceModel
 
 @Entity(
     tableName = "balance",

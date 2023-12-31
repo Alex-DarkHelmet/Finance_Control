@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import com.alex_bystrov.safemoney.data.source.local.entities.CategoryEntity
 import com.alex_bystrov.safemoney.data.source.local.entities.UserTransactionEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -20,6 +21,9 @@ interface UserTransactionDao {
 
     @Query("SELECT * FROM user_transactions WHERE id = :id")
     fun getTransactionByChosenDay(id: Long): UserTransactionEntity
+
+    @Query("SELECT * FROM category_entity WHERE category_id = :id")
+    fun getCategoryName(id: Long): CategoryEntity
 
     @Delete
     suspend fun deleteTransaction(transaction: UserTransactionEntity)
