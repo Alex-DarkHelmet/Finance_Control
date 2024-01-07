@@ -2,33 +2,56 @@ package com.alex_bystrov.safemoney.domain.features.transactions
 
 import com.alex_bystrov.safemoney.data.repository.TransactionsDataRepository
 import com.alex_bystrov.safemoney.domain.features.balance.BalanceRepository
-import com.alex_bystrov.safemoney.common.Converter
+import com.alex_bystrov.safemoney.domain.common.CategoryModel
+import com.alex_bystrov.safemoney.domain.common.DailyTotalModel
+import com.alex_bystrov.safemoney.domain.features.calendar.CalendarRepository
+import com.alex_bystrov.safemoney.domain.features.transactions.models.TypeTransactionModel
 import com.alex_bystrov.safemoney.domain.features.transactions.models.UserTransactionModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.toList
 
 class UserTransactions(
     private val transactionsRepository: TransactionsDataRepository,
     private val balanceRepository: BalanceRepository,
-    private val converter: Converter
-//    private val calendar: CalendarRepository,
-//    private val calculateBalance: CalculateBalanceRepository
+    private val calendarRepository: CalendarRepository,
 ) : UserTransactionsRepository {
 
-    override suspend fun getDailyTransactions(date: String): Flow<List<UserTransactionModel>> {
-        return transactionsRepository.getDailyTransactions(date = date)
+    override suspend fun getDailyTransactions(date: String): DailyTotalModel {
+        TODO()
     }
 
     override suspend fun getChosenTransaction(id: Long): UserTransactionModel {
         return transactionsRepository.getChosenTransaction(id = id)
     }
 
-    override suspend fun getMonthlyTransactions(
-        dateStart: String,
-        dateEnd: String
-    ): Flow<List<UserTransactionModel>> {
-        return transactionsRepository.getMonthlyTransactions(dateStart = dateStart, dateEnd = dateEnd)
+    //refactor this method
+    override suspend fun getMonthlyTransactions(date: String): Flow<List<DailyTotalModel>> {
+        val dateStart = calendarRepository.getFirstAndLastDayInMonth(date, true)
+        val dateEnd = calendarRepository.getFirstAndLastDayInMonth(date, false)
+        val transactionsFlow = transactionsRepository.getMonthlyTransactions(dateStart = dateStart, dateEnd = dateEnd)
+
+        return flow {
+            val dailyTransactions = mutableMapOf<String, MutableList<UserTransactionModel>>()
+
+            transactionsFlow.collect { transactions ->
+                transactions.onEach {
+                    dailyTransactions.computeIfAbsent(it.date) { mutableListOf() }.add(it)
+                }
+            }
+
+            val dailyTotal = dailyTransactions.map { (key, value) ->
+                balanceRepository.getDailyBalance(key, value)
+            }
+
+            emit(dailyTotal)
+        }
     }
 
+    override suspend fun getCategoriesByType(type: TypeTransactionModel): List<CategoryModel> {
+        return transactionsRepository.getCategoriesByType(type = type.name)
+    }
 
     override suspend fun updateTransaction(id: Long, newValues: UserTransactionModel) {
         return transactionsRepository.updateTransaction(newValues = newValues)
@@ -48,18 +71,18 @@ class UserTransactions(
         return transactionsRepository.getCategory(transaction.category).category
     }
 
-//    private suspend fun getTransactionsByDay(date: String): Map<String, List<UserTransactionModel>> {
-//        val transactionsFlow = transactions.getDailyTransactions(date = date)
-//
-//        return transactionsFlow
-//            .map {transactions ->
-//                transactions.filter { item -> item.date == date }
-//            }
-//            .toList()
-//            .let {filteredTransactions ->
-//                mapOf(date to filteredTransactions.flatten())
-//            }
-//    }
+    private suspend fun getTransactionsByDay(date: String): Map<String, List<UserTransactionModel>> {
+        val transactionsFlow = transactionsRepository.getDailyTransactions(date = date)
+
+        return transactionsFlow
+            .map {transactions ->
+                transactions.filter { item -> item.date == date }
+            }
+            .toList()
+            .let {filteredTransactions ->
+                mapOf(date to filteredTransactions.flatten())
+            }
+    }
 
 //    private fun getCalculatedDailyTransactions(date: String): Flow<DailyTotalModel> = flow {
 //        transactions.getDailyTransactions(date = date).map { transactions ->

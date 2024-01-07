@@ -7,7 +7,6 @@ import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 class Converter {
-
     fun convertDateToYearAndMonth(date: String) : String {
         return LocalDate.parse(date).format(DateTimeFormatter.ofPattern("yyyy-MM"))
     }

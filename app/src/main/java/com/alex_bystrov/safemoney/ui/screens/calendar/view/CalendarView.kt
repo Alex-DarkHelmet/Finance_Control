@@ -30,9 +30,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.alex_bystrov.safemoney.R
 import com.alex_bystrov.safemoney.common.Converter
+import com.alex_bystrov.safemoney.domain.common.DailyTotalModel
 import com.alex_bystrov.safemoney.domain.features.calendar.model.CalendarModel
 import com.alex_bystrov.safemoney.domain.features.calendar.model.WeekDays
-import com.alex_bystrov.safemoney.domain.common.DailyTotalModel
+import com.alex_bystrov.safemoney.domain.features.calendar.Calendar
 import com.alex_bystrov.safemoney.ui.theme.SafeMoneyAppTheme
 import com.alex_bystrov.safemoney.ui.theme.SafeMoneyTheme
 import java.time.LocalDate
@@ -181,7 +182,7 @@ private fun TransactionsCalendar(
                 WeekDaysHeader(weekDay = calendar.weekDays[day].toString())
             }
 
-            items(calendar.startWeekday.ordinal) {
+            items(calendar.startWeekday) {
                 TransactionItemByDay(
                     onDayClicked = {}
                 )
@@ -197,8 +198,8 @@ private fun TransactionsCalendar(
 
                 TransactionItemByDay(
                     day = days[day],
-                    income = incomeByDay?.totalDailyIncome,
-                    expense = expenseByDay?.totalDailyExpense,
+                    income = incomeByDay?.dailyIncome,
+                    expense = expenseByDay?.dailyExpense,
                     isSelectedDay = chosenDay.intValue.toString() == days[day],
                     isCurrentDay = calendar.currentDay.toString() == days[day],
                     onDayClicked = {
@@ -279,23 +280,23 @@ fun CalendarTransactionViewPreview() {
                     month = converter.formattedMonth(LocalDate.now().month.name),
                     days = LocalDate.now().month.maxLength(),
                     weekDays = WeekDays.values().toList(),
-                    startWeekday = WeekDays.Fri,
+                    startWeekday = Calendar(converter).getStartWeekdayOfMonth(LocalDate.now().toString()),
                 ),
                 dailyTotal = listOf(
                     DailyTotalModel(
                         date = "2020.05.13",
-                        totalDailyIncome = "200.0",
-                        totalDailyExpense = "20.0"
+                        dailyExpense = "200.0",
+                        dailyIncome = "20.0"
                     ),
                     DailyTotalModel(
                         date = "2020.05.16",
-                        totalDailyIncome = "22340.0",
-                        totalDailyExpense = "34560.0"
+                        dailyIncome = "22340.0",
+                        dailyExpense = "34560.0"
                     ),
                     DailyTotalModel(
                         date = "2020.05.18",
-                        totalDailyIncome = "23450.0",
-                        totalDailyExpense = "85780.0"
+                        dailyIncome = "23450.0",
+                        dailyExpense = "85780.0"
                     ),
                 ),
                 onNextMonthClicked = {

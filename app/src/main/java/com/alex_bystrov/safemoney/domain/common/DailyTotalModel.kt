@@ -5,6 +5,6 @@ import com.alex_bystrov.safemoney.domain.features.transactions.models.UserTransa
 data class DailyTotalModel(
     val date: String,
     val transactions: List<UserTransactionModel> = emptyList(),
-    val totalDailyIncome: String,
-    val totalDailyExpense: String,
+    val dailyIncome: String,
+    val dailyExpense: String
 )

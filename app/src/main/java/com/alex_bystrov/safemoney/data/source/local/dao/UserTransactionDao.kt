@@ -25,6 +25,8 @@ interface UserTransactionDao {
     @Query("SELECT * FROM category_entity WHERE category_id = :id")
     fun getCategoryName(id: Long): CategoryEntity
 
+    @Query("SELECT * FROM category_entity WHERE type = :type")
+    fun getCategoriesByType(type: String): List<CategoryEntity>
     @Delete
     suspend fun deleteTransaction(transaction: UserTransactionEntity)
 

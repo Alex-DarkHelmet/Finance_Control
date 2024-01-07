@@ -2,10 +2,10 @@ package com.alex_bystrov.safemoney.domain.features.balance
 
 import com.alex_bystrov.safemoney.common.Converter
 import com.alex_bystrov.safemoney.data.repository.BalanceDataRepository
+import com.alex_bystrov.safemoney.domain.common.DailyTotalModel
 import com.alex_bystrov.safemoney.domain.features.balance.model.MonthlyBalanceModel
 import com.alex_bystrov.safemoney.domain.features.balance.model.TotalBalanceModel
 import com.alex_bystrov.safemoney.domain.features.calculate.CalculationRepository
-import com.alex_bystrov.safemoney.domain.common.DailyTotalModel
 import com.alex_bystrov.safemoney.domain.features.transactions.models.UserTransactionModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -20,8 +20,8 @@ class Balance(
         return balanceLocalDataSource.getBalanceFromMonth(yearMonth)
     }
 
-    override suspend fun getDailyBalance(transactions: List<UserTransactionModel>): DailyTotalModel {
-        return calculateRepository.getDailyTotal(transactions)
+    override suspend fun getDailyBalance(date: String, transactions: List<UserTransactionModel>): DailyTotalModel {
+        return calculateRepository.calculateDailyTotal(date, transactions)
     }
 
 

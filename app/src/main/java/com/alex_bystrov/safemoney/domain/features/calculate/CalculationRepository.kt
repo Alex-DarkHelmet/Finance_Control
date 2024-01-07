@@ -8,7 +8,7 @@ interface CalculationRepository {
 
     fun getCalculatedMonthlyBalance(balance: MonthlyBalanceModel, transaction: UserTransactionModel): MonthlyBalanceModel
 
-    fun getDailyTotal(transactions: List<UserTransactionModel>): DailyTotalModel
+    fun calculateDailyTotal(date: String, transactions: List<UserTransactionModel>): DailyTotalModel
 
     fun getCalculatedInput(userInput: String): String
 }

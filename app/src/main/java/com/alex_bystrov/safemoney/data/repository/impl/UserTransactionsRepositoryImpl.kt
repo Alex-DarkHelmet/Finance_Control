@@ -41,6 +41,10 @@ class UserTransactionsRepositoryImpl(
         return transactionsLocalDataSource.getCategoryName(id).mapToCategoryModel()
     }
 
+    override suspend fun getCategoriesByType(type: String): List<CategoryModel> {
+        return transactionsLocalDataSource.getCategoriesByType(type = type).map { category -> category.mapToCategoryModel() }
+    }
+
     override suspend fun deleteTransaction(transaction: UserTransactionModel) {
         return transactionsLocalDataSource.deleteTransaction(transaction = transaction.mapToTransactionDataEntity())
     }

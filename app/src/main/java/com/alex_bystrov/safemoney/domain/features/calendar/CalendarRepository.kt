@@ -1,7 +1,7 @@
 package com.alex_bystrov.safemoney.domain.features.calendar
 
 interface CalendarRepository {
-    fun getStartWeekdayOfMonth(currentDate: String): String
+    fun getStartWeekdayOfMonth(currentDate: String): Int
 
     fun getMonthName(currentDate: String): String
 
@@ -11,7 +11,7 @@ interface CalendarRepository {
 
     fun getLastMonth(currentMonth: Int): Int
 
-    fun getLimitsDatesInMonth(date: String, isStart: Boolean): String
+    fun getFirstAndLastDayInMonth(date: String, isFirst: Boolean): String
 
     fun isFirstDayOfMonth(date: String): Boolean
 }

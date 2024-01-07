@@ -64,7 +64,7 @@ fun TransactionsByDayView(
                 modifier = modifier,
                 verticalArrangement = Arrangement.Center
             ) {
-                if (model.totalDailyIncome.isNotEmpty()) {
+                if (model.dailyIncome.isNotEmpty()) {
                     Text(
                         modifier = modifier
                             .padding(end = 10.dp),
@@ -90,14 +90,14 @@ fun TransactionsByDayView(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                if (model.totalDailyIncome.isNotEmpty()) {
+                if (model.dailyIncome.isNotEmpty()) {
                     Text(
                         modifier = modifier
                             .padding(end = 5.dp),
                         fontSize = 15.sp,
                         fontWeight = FontWeight(500),
                         color = Color.Green, // change to own typography
-                        text = model.totalDailyIncome
+                        text = model.dailyIncome
                     )
                 }
 
@@ -107,7 +107,7 @@ fun TransactionsByDayView(
                     fontSize = 15.sp,
                     fontWeight = FontWeight(500),
                     color = Color.White, // change to own typography
-                    text = model.totalDailyExpense
+                    text = model.dailyExpense
                 )
             }
         }
