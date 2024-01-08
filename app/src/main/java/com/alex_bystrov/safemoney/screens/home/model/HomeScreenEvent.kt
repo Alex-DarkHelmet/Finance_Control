@@ -1,4 +1,4 @@
-package com.alex_bystrov.safemoney.ui.screens.home.model
+package com.alex_bystrov.safemoney.screens.home.model
 
 sealed class HomeScreenEvent {
     object EnterScreen : HomeScreenEvent()

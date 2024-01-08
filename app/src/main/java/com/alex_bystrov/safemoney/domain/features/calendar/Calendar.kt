@@ -3,7 +3,6 @@ package com.alex_bystrov.safemoney.domain.features.calendar
 import com.alex_bystrov.safemoney.common.Converter
 import com.alex_bystrov.safemoney.domain.features.calendar.model.WeekDays
 import java.time.LocalDate
-import java.util.Calendar
 
 class Calendar(
     private val converter: Converter
@@ -17,7 +16,7 @@ class Calendar(
 
     override fun getMonthName(currentDate: String): String {
         val date = LocalDate.parse(currentDate)
-        return converter.formattedMonth(month = date.month.name)
+        return converter.formattedMonthOrWeekday(month = date.month.name)
     }
 
     override fun getTotalDaysInMonth(currentDate: String): Int {

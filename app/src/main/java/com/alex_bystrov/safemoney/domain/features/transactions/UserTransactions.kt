@@ -1,18 +1,21 @@
 package com.alex_bystrov.safemoney.domain.features.transactions
 
 import com.alex_bystrov.safemoney.data.repository.TransactionsDataRepository
-import com.alex_bystrov.safemoney.domain.features.balance.BalanceRepository
 import com.alex_bystrov.safemoney.domain.common.CategoryModel
 import com.alex_bystrov.safemoney.domain.common.DailyTotalModel
+import com.alex_bystrov.safemoney.domain.features.balance.BalanceRepository
 import com.alex_bystrov.safemoney.domain.features.calendar.CalendarRepository
 import com.alex_bystrov.safemoney.domain.features.transactions.models.TypeTransactionModel
 import com.alex_bystrov.safemoney.domain.features.transactions.models.UserTransactionModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.toList
+import javax.inject.Inject
 
-class UserTransactions(
+@HiltViewModel
+class UserTransactions @Inject constructor(
     private val transactionsRepository: TransactionsDataRepository,
     private val balanceRepository: BalanceRepository,
     private val calendarRepository: CalendarRepository,

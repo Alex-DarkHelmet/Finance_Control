@@ -7,7 +7,6 @@ import com.alex_bystrov.safemoney.domain.features.transactions.models.UserTransa
 import kotlinx.coroutines.flow.Flow
 
 interface UserTransactionsRepository {
-
     suspend fun getDailyTransactions(date: String): DailyTotalModel
 
     suspend fun getChosenTransaction(id: Long): UserTransactionModel

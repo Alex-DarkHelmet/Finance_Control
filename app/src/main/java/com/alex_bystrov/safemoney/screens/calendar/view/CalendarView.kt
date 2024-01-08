@@ -1,4 +1,4 @@
-package com.alex_bystrov.safemoney.ui.screens.calendar.view
+package com.alex_bystrov.safemoney.screens.calendar.view
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -277,7 +277,7 @@ fun CalendarTransactionViewPreview() {
             CalendarView(
                 calendar = CalendarModel(
                     currentDay = LocalDate.now().dayOfMonth,
-                    month = converter.formattedMonth(LocalDate.now().month.name),
+                    month = converter.formattedMonthOrWeekday(LocalDate.now().month.name),
                     days = LocalDate.now().month.maxLength(),
                     weekDays = WeekDays.values().toList(),
                     startWeekday = Calendar(converter).getStartWeekdayOfMonth(LocalDate.now().toString()),

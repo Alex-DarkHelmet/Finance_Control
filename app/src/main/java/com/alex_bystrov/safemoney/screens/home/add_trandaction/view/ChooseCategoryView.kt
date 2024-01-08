@@ -1,4 +1,4 @@
-package com.alex_bystrov.safemoney.ui.screens.home.add_trandaction.view
+package com.alex_bystrov.safemoney.screens.home.add_trandaction.view
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.LinearEasing

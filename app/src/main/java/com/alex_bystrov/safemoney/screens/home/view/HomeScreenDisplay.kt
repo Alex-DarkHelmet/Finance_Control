@@ -1,4 +1,4 @@
-package com.alex_bystrov.safemoney.ui.screens.home.view
+package com.alex_bystrov.safemoney.screens.home.view
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ModalNavigationDrawer
@@ -26,8 +25,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.alex_bystrov.safemoney.R
-import com.alex_bystrov.safemoney.ui.components.TransactionsByDayView
-import com.alex_bystrov.safemoney.ui.screens.home.model.HomeScreenViewState
+import com.alex_bystrov.safemoney.screens.components.DailyTransactionsView
+import com.alex_bystrov.safemoney.screens.home.model.HomeScreenViewState
 
 enum class BottomIcons {
     Home, Calendar, Budget, Statistic
@@ -164,8 +163,7 @@ fun HomeScreenDisplay(
 
             item {
                 viewState.dailyTransactions.forEach { item ->
-                    TransactionsByDayView(
-                        date = item.date,
+                    DailyTransactionsView(
                         model = item
                     )
                 }

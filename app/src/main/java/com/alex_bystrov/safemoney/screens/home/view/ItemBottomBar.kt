@@ -1,4 +1,4 @@
-package com.alex_bystrov.safemoney.ui.screens.home.view
+package com.alex_bystrov.safemoney.screens.home.view
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

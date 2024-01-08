@@ -1,4 +1,4 @@
-package com.alex_bystrov.safemoney.ui.components
+package com.alex_bystrov.safemoney.screens.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -25,15 +25,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.alex_bystrov.safemoney.R
+import com.alex_bystrov.safemoney.common.Converter
 import com.alex_bystrov.safemoney.domain.common.DailyTotalModel
 import com.alex_bystrov.safemoney.domain.features.transactions.models.UserTransactionModel
 import com.alex_bystrov.safemoney.ui.theme.SafeMoneyAppTheme
 import com.alex_bystrov.safemoney.ui.theme.SafeMoneyTheme
-
+private val converter = Converter()
 @Composable
-fun TransactionsByDayView(
+fun DailyTransactionsView(
     modifier: Modifier = Modifier,
-    date: String,
     model: DailyTotalModel
 ) {
     Card(
@@ -57,7 +57,7 @@ fun TransactionsByDayView(
                 fontSize = 15.sp,
                 fontWeight = FontWeight(500),
                 color = Color.White, // change to own typography
-                text = date
+                text = converter.getFormattedDay(model.date)
             )
             // title of transactions
             Column(
@@ -123,7 +123,7 @@ fun TransactionsByDayView(
                 .fillMaxWidth()
         ) {
             model.transactions.forEach { item ->
-                TransactionByCategory(
+                TransactionsView(
                     model = item,
                     backgroundColor = Color.Red,
                     icon = painterResource(id = R.drawable.default_icon_24),
@@ -136,7 +136,7 @@ fun TransactionsByDayView(
 }
 
 @Composable
-fun TransactionByCategory(
+fun TransactionsView(
     modifier: Modifier = Modifier,
     model: UserTransactionModel,
     backgroundColor: Color,
@@ -152,31 +152,31 @@ fun TransactionByCategory(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Icon(
+        Row(
             modifier = modifier
-                .size(30.dp)
-                .padding(end = 5.dp),
-            tint = backgroundColor,
-            painter = icon,
-            contentDescription = descriptionIcon
-        )
-        Text(
-            modifier = modifier
-                .padding(start = 5.dp, end = 5.dp),
-            text = model.category.toString(),
-            fontSize = 16.sp,
-            fontWeight = FontWeight(400),
-            color = Color.White
-        )
+                .padding(5.dp)
+                ,
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
 
-        Text(
-            modifier = modifier
-                .padding(start = 5.dp, end = 5.dp),
-            text = stringResource(id = R.string.category_divider),
-            fontWeight = FontWeight(400),
-            fontSize = 16.sp,
-            color = Color.White
-        )
+            Icon(
+                modifier = modifier
+                    .size(30.dp)
+                    .padding(end = 5.dp),
+                tint = backgroundColor,
+                painter = icon,
+                contentDescription = descriptionIcon
+            )
+            Text(
+                modifier = modifier
+                    .padding(start = 5.dp, end = 5.dp),
+                text = model.category.toString(),
+                fontSize = 16.sp,
+                fontWeight = FontWeight(400),
+                color = Color.White
+            )
+        }
 
         Text(
             modifier = modifier
@@ -189,52 +189,46 @@ fun TransactionByCategory(
     }
 }
 
-@Preview
-@Composable
-private fun TransactionViewNoIncomePreview() {
-    TransactionsViewPreview(income = 0.0)
-}
 
 @Preview
-@Composable
-private fun TransactionViewWithIncomePreview() {
-    TransactionsViewPreview(income = 1000.0)
-}
-
 @Composable
 fun TransactionsViewPreview(
-    income: Double
 ) {
     SafeMoneyTheme {
-        Surface(
-
-        ) {
-//            TransactionsByDayView(
-//                items = listOf(
-//                    TransactionModel(
-//                        amount = 223.0,
-//                        category = "Food",
-//                        subCategory = "7/11",
-//                        emoji = painterResource(id = R.drawable.test_icon)
-//                    ),
-//                    TransactionModel(
-//                        amount = 33.0,
-//                        category = "Home",
-//                        subCategory = "Bills",
-//                        emoji = painterResource(id = R.drawable.test_icon)
-//                    ),
-//                    TransactionModel(
-//                        amount = 243.0,
-//                        category = "Work",
-//                        subCategory = "Stuff",
-//                        emoji = painterResource(id = R.drawable.test_icon)
-//                    )
-//                ),
-//                totalByDay = TotalByDayModel(
-//                    totalExpenseByDay = 1000000.0,
-//                    totalIncomeByDay = income
-//                )
-//            )
+        Surface (
+            modifier = Modifier
+        ){
+            DailyTransactionsView(
+                model = DailyTotalModel(
+                    date = "2010-09-12",
+                    transactions = listOf(
+                        UserTransactionModel(
+                            id = 1,
+                            date = "2010.09.12",
+                            category = 12325134
+                        ),
+                        UserTransactionModel(
+                            id = 1,
+                            date = "2010.09.12",
+                            category = 12325134
+                        ),
+                        UserTransactionModel(
+                            id = 1,
+                            date = "2010.09.12",
+                            amount = 423.1,
+                            category = 12325134
+                        ),
+                        UserTransactionModel(
+                            id = 1,
+                            date = "2010.09.12",
+                            amount = 123.0,
+                            category = 12325134
+                        ),
+                    ),
+                    dailyIncome = "1000.0",
+                    dailyExpense = "1293"
+                )
+            )
         }
     }
 }

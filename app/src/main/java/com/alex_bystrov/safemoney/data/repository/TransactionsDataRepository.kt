@@ -12,6 +12,7 @@ interface TransactionsDataRepository {
     suspend fun getChosenTransaction(id: Long): UserTransactionModel
 
     suspend fun getCategory(id: Long): CategoryModel
+
     suspend fun getCategoriesByType(type: String): List<CategoryModel>
 
     suspend fun deleteTransaction(transaction: UserTransactionModel)

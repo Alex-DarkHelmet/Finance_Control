@@ -1,21 +1,25 @@
-package com.alex_bystrov.safemoney.ui.screens.home
+package com.alex_bystrov.safemoney.screens.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alex_bystrov.safemoney.common.OnEvent
 import com.alex_bystrov.safemoney.domain.features.balance.BalanceRepository
 import com.alex_bystrov.safemoney.domain.features.transactions.UserTransactionsRepository
-import com.alex_bystrov.safemoney.ui.screens.home.model.HomeScreenEvent
-import com.alex_bystrov.safemoney.ui.screens.home.model.HomeScreenViewState
+import com.alex_bystrov.safemoney.screens.home.model.HomeScreenEvent
+import com.alex_bystrov.safemoney.screens.home.model.HomeScreenViewState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import javax.inject.Inject
 
-class HomeViewModel(
+@HiltViewModel
+class HomeViewModel @Inject constructor(
     private val balanceRepository: BalanceRepository,
     private val transactionRepository: UserTransactionsRepository
 ) : ViewModel(), OnEvent<HomeScreenEvent> {
@@ -40,7 +44,7 @@ class HomeViewModel(
             val userTransactions = transactionRepository.getMonthlyTransactions(date = currentDate)
 
             combine(currentBalance, totalBalance, userTransactions) { balance, total, transactions ->
-                _viewState.emit(
+                _viewState.update {
                     HomeScreenViewState.Display(currentDate).copy(
                         currentMonth = currentDate,
                         expenseByMonth = balance.expenseSum,
@@ -49,7 +53,7 @@ class HomeViewModel(
                         totalBalance = total.totalAmount,
                         dailyTransactions = transactions
                     )
-                )
+                }
             }
         }
     }

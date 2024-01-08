@@ -1,4 +1,4 @@
-package com.alex_bystrov.safemoney.ui.screens.home.model
+package com.alex_bystrov.safemoney.screens.home.model
 
 import com.alex_bystrov.safemoney.domain.common.DailyTotalModel
 
