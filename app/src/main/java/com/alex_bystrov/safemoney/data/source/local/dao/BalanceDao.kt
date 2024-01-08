@@ -23,6 +23,6 @@ interface BalanceDao {
     @Query("SELECT * FROM total_balance_entity")
     fun getTotalBalance(): Flow<TotalBalanceEntity>
 
-    @Query("UPDATE total_balance_entity SET total = :newValue")
+    @Query("UPDATE total_balance_entity SET totalAmount = :newValue")
     fun updateTotalBalance(newValue: Double)
 }

@@ -8,12 +8,12 @@ import com.alex_bystrov.safemoney.domain.features.balance.model.TotalBalanceMode
 data class TotalBalanceEntity(
     @PrimaryKey(autoGenerate = true)
     val totalBalanceId: Long = 0,
-    val total: Double = 0.0
+    val totalAmount: Double = 0.0
 )
 
 fun TotalBalanceEntity.mapToDomainTotalBalance() : TotalBalanceModel =
     TotalBalanceModel(
         id = totalBalanceId,
-        total = total
+        totalAmount = totalAmount
     )
 

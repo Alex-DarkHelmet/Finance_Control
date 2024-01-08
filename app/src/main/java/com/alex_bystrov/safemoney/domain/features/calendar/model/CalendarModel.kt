@@ -5,7 +5,7 @@ data class CalendarModel(
     val month: String,
     val days: Int,
     val weekDays: List<WeekDays>,
-    val startWeekday: WeekDays
+    val startWeekday: Int
 )
 
 enum class WeekDays {

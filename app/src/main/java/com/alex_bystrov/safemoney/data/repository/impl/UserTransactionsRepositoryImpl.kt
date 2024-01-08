@@ -1,12 +1,12 @@
 package com.alex_bystrov.safemoney.data.repository.impl
 
+import com.alex_bystrov.safemoney.data.repository.TransactionsDataRepository
 import com.alex_bystrov.safemoney.data.source.local.dao.UserTransactionDao
+import com.alex_bystrov.safemoney.data.source.local.entities.mapToCategoryModel
 import com.alex_bystrov.safemoney.data.source.local.entities.mapToUserTransactionModel
+import com.alex_bystrov.safemoney.domain.common.CategoryModel
 import com.alex_bystrov.safemoney.domain.features.transactions.models.UserTransactionModel
 import com.alex_bystrov.safemoney.domain.features.transactions.models.mapToTransactionDataEntity
-import com.alex_bystrov.safemoney.data.repository.TransactionsDataRepository
-import com.alex_bystrov.safemoney.data.source.local.entities.mapToCategoryModel
-import com.alex_bystrov.safemoney.domain.common.CategoryModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.transform
 
@@ -39,6 +39,10 @@ class UserTransactionsRepositoryImpl(
 
     override suspend fun getCategory(id: Long): CategoryModel {
         return transactionsLocalDataSource.getCategoryName(id).mapToCategoryModel()
+    }
+
+    override suspend fun getCategoriesByType(type: String): List<CategoryModel> {
+        return transactionsLocalDataSource.getCategoriesByType(type = type).map { category -> category.mapToCategoryModel() }
     }
 
     override suspend fun deleteTransaction(transaction: UserTransactionModel) {

@@ -6,9 +6,6 @@ import com.alex_bystrov.safemoney.domain.features.balance.model.MonthlyBalanceMo
 import com.alex_bystrov.safemoney.domain.features.transactions.models.TypeTransactionModel
 import com.alex_bystrov.safemoney.domain.features.transactions.models.UserTransactionModel
 
-enum class TypeOfCalculations {
-    Sum, Minus, Divide, Multiply
-}
 class Calculations(
     private val converter: Converter
 ): CalculationRepository {
@@ -32,12 +29,12 @@ class Calculations(
             }
         }
     }
-    override fun getDailyTotal(
+    override fun calculateDailyTotal(
+        date: String,
         transactions: List<UserTransactionModel>
     ): DailyTotalModel {
         val dailyTotalExpense = 0.0
         val dailyTotalIncome = 0.0
-        val date = transactions.first().date
 
         transactions
             .onEach { item ->
@@ -50,8 +47,9 @@ class Calculations(
 
         return DailyTotalModel(
             date = date,
-            totalDailyExpense = dailyTotalExpense.toString(),
-            totalDailyIncome = dailyTotalIncome.toString()
+            transactions = transactions,
+            dailyExpense = dailyTotalExpense.toString(),
+            dailyIncome = dailyTotalIncome.toString()
         )
     }
 
@@ -77,7 +75,7 @@ class Calculations(
                 } else {
                     totalInput = inputCalculationsByType(
                         totalInput = totalInput.toDouble(),
-                        operator = matchAllMathOperators(mathOperator.first()),
+                        operator = mathOperator.first(),
                         nexInputNumber = nextInputNum.toDouble()
                     )
 
@@ -91,7 +89,7 @@ class Calculations(
         if (nextInputNum.isNotEmpty()) {
             totalInput = inputCalculationsByType(
                 totalInput = totalInput.toDouble(),
-                operator = matchAllMathOperators(mathOperator.first()),
+                operator = mathOperator.first(),
                 nexInputNumber = nextInputNum.toDouble()
             )
         }
@@ -100,25 +98,16 @@ class Calculations(
     }
 
     private fun inputCalculationsByType(
-        totalInput: Double, operator: TypeOfCalculations, nexInputNumber: Double
+        totalInput: Double, operator: Char, nexInputNumber: Double
     ): String {
         return if (nexInputNumber != 0.0) {
             when (operator) {
-                TypeOfCalculations.Sum -> totalInput.plus(nexInputNumber).toString()
-                TypeOfCalculations.Minus -> totalInput.minus(nexInputNumber).toString()
-                TypeOfCalculations.Multiply -> totalInput.times(nexInputNumber).toString()
-                TypeOfCalculations.Divide -> totalInput.div(nexInputNumber).toString()
+                '+' -> totalInput.plus(nexInputNumber).toString()
+                '-' -> totalInput.minus(nexInputNumber).toString()
+                '*' -> totalInput.times(nexInputNumber).toString()
+                '/' -> totalInput.div(nexInputNumber).toString()
+                else ->throw RuntimeException("Unknown operator - $operator")
             }
         } else "0"
-    }
-
-    private fun matchAllMathOperators(charOperator: Char): TypeOfCalculations {
-        return when (charOperator) {
-            '+' -> TypeOfCalculations.Sum
-            '-' -> TypeOfCalculations.Minus
-            '*' -> TypeOfCalculations.Multiply
-            '/' -> TypeOfCalculations.Divide
-            else -> throw RuntimeException("Unknown operator - $charOperator")
-        }
     }
 }

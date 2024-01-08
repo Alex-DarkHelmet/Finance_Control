@@ -7,13 +7,20 @@ import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 class Converter {
-
     fun convertDateToYearAndMonth(date: String) : String {
         return LocalDate.parse(date).format(DateTimeFormatter.ofPattern("yyyy-MM"))
     }
 
-    fun formattedMonth(month: String): String {
+    fun formattedMonthOrWeekday(month: String): String {
         return month.lowercase().replaceFirstChar { it.uppercase() }.slice(0..2)
+    }
+
+    fun getFormattedDay(date: String): String {
+        val parsedDate = LocalDate.parse(date)
+        val day = parsedDate.dayOfMonth
+        val month = parsedDate.month.value
+        val weekday = formattedMonthOrWeekday(parsedDate.dayOfWeek.name)
+        return "$day.$month ($weekday)"
     }
 
     fun formattedSum(unformattedInput: Double): String {

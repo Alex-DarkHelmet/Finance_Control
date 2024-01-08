@@ -3,18 +3,19 @@ package com.alex_bystrov.safemoney.data.source.local.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.alex_bystrov.safemoney.domain.features.transactions.models.TypeTransactionModel
 import com.alex_bystrov.safemoney.domain.features.transactions.models.UserTransactionModel
 
 @Entity(
     tableName = "user_transactions",
+    indices = [Index("category_id")],
     foreignKeys = [
         ForeignKey(
             entity = CategoryEntity::class,
             parentColumns = ["category_id"],
             childColumns = ["category_id"],
-            onDelete = ForeignKey.CASCADE
         )
     ]
 )

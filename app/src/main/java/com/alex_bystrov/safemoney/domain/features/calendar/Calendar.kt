@@ -1,21 +1,22 @@
 package com.alex_bystrov.safemoney.domain.features.calendar
 
 import com.alex_bystrov.safemoney.common.Converter
+import com.alex_bystrov.safemoney.domain.features.calendar.model.WeekDays
 import java.time.LocalDate
-import java.util.Calendar
 
 class Calendar(
     private val converter: Converter
 ) : CalendarRepository {
-    override fun getStartWeekdayOfMonth(currentDate: String): String {
+    override fun getStartWeekdayOfMonth(currentDate: String): Int {
         val date = LocalDate.parse(currentDate)
         val startDayOfMonth = date.minusDays(date.dayOfMonth.toLong() - 1)
-        return startDayOfMonth.dayOfWeek.name
+        val weekdays = WeekDays.values()
+        return weekdays[startDayOfMonth.dayOfMonth].ordinal - 1
     }
 
     override fun getMonthName(currentDate: String): String {
         val date = LocalDate.parse(currentDate)
-        return converter.formattedMonth(month = date.month.name)
+        return converter.formattedMonthOrWeekday(month = date.month.name)
     }
 
     override fun getTotalDaysInMonth(currentDate: String): Int {
@@ -39,10 +40,10 @@ class Calendar(
         }
     }
 
-    override fun getLimitsDatesInMonth(date: String, isStart: Boolean): String {
+    override fun getFirstAndLastDayInMonth(date: String, isFirst: Boolean): String {
         val currentDate = LocalDate.parse(date)
 
-        return if (isStart) {
+        return if (isFirst) {
             currentDate.minusDays(currentDate.dayOfMonth.toLong() - 1).toString()
         } else {
             val daysInMonth = currentDate.lengthOfMonth()

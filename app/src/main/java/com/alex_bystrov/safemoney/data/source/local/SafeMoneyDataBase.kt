@@ -17,7 +17,7 @@ import com.alex_bystrov.safemoney.data.source.local.entities.UserTransactionEnti
         CategoryEntity::class
     ],
     version = 1,
-    exportSchema = true
+    exportSchema = false
 )
 abstract class SafeMoneyDataBase : RoomDatabase() {
     abstract fun transactionDao(): UserTransactionDao
